@@ -1,7 +1,7 @@
 /*
- *Miinaharava
- *By Juhani Heliö
-*/
+ * Miinaharava
+ * By Juhani Heliö
+ */
 
 public class Ruutu {
     
