@@ -1,0 +1,28 @@
+10
+
+dir
+0
+svn+ssh://melkki.cs.helsinki.fi/fs/home/jphelio/svn/repository/src/GUI
+svn+ssh://melkki.cs.helsinki.fi/fs/home/jphelio/svn/repository
+add
+
+
+
+
+
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+59657af0-4321-4826-bd7b-fe6863657475
+
