@@ -1,21 +1,27 @@
 package logiikka;
 
+
+/*
+ * Miinaharava
+ * By Juhani Heliö
+ */
+
 import java.util.*;
 /**
- * Miinaharava
- * Ruutu on logiikkaluokka.
+ * Ruutu on ainut logiikkaluokka.
  * @author Juhani Heliö
  */
 public class Ruutu {
     
-    public static final int MIINA=1;        
-    public static final int TYHJA=0;        
-    private int[][] tilaTaulukko;           //pitää kirjaa ruutujen tilasta, eli onko se miina vai normaali ruutu 
-    private boolean[][] aputaulu;           //pitää kirjaa siitä, onko ruutu avattu
-    private int miina;                      //miinojen määrä
-    private int miinojaPelissa;             //miinojen määrä
-    private int koko;                       //ruudukoiden koko. Ruudukot ovat neliömäisiä 
-    private int normaalejaRuutujaAvattu=0;  //pitää kirjaa montako tyhjää ruutua on avattu
+    public static final int MIINA=1;
+    public static final int TYHJA=0;
+    private int[][] tilaTaulukko;  //pitää kirjaa ruutujen tilasta, eli onko se miina vai normaali ruutu 
+    private boolean[][] aputaulu;      //pitää kirjaa siitä, onko ruutu avattu
+    private int miina;             //miinojen määrä
+    private int miinojaPelissa;    //miinojen määrä
+    private int koko;
+    private int miinojenMaara;
+    private int normaalejaRuutujaAvattu=0;    
     /**
      * Ruudun konstruktori. Luo taulukot, jotka pitävät kirjaa miinojen sijainneista ja avatuista ruuduista.
      * @param koko Ruudunkoiden koko. Ruudukko on koko*koko
@@ -80,7 +86,7 @@ public class Ruutu {
      * @return Palauttaa avatun ruudun ympärillä olevien miinjen määrän kokonaislukuna. 
      */
     public int getNaapuriMiinat(int y, int x){
-        int miinojenMaara=0;
+        miinojenMaara=0;
         int minY=Math.max(0, y-1);
         int maxY=Math.min(y+1, koko-1);
         int minX=Math.max(0,x-1);
@@ -95,11 +101,7 @@ public class Ruutu {
         return miinojenMaara;
     }
     
-    /**
-     * merkitsee aputauluun ruudun (y,x) ympärillä olevat ruudut
-     * @param y ruudun x-koordinaatti
-     * @param x ruudun y-koordinaatti
-     */
+    
     public void avaaTyhjatRuudut(int y, int x){
         int minY=Math.max(0, y-koko);
         int maxY=Math.min(y+koko, koko-1);
@@ -113,11 +115,6 @@ public class Ruutu {
             }
         }
     }
-    
-    /**
-     * tarkistaa, onko kaikki tyjäht ruudut avattu
-     * @return palauttaa true jos kaikki tyhjät ruudut on avattu ja false jos ei.
-     */
     public boolean voitto(){
         int normaalit=koko*koko-miinojaPelissa;
         if(normaalejaRuutujaAvattu==normaalit){

@@ -3,9 +3,9 @@ package gui;
 import java.awt.event.*;
 import javax.swing.*;
 /**
- * Miinaharava
- * @author Juhani Heliö
- */
+* Miinaharava
+* @author Juhani Heliö
+*/
 public class Peli extends JFrame{
     private JMenuBar palkki;
     private JMenu peli;
@@ -18,11 +18,11 @@ public class Peli extends JFrame{
     private Pelilauta lauta;
     
     /**
-     * Luo uuden pelialueen, johon liitetään ruudukko ja valikot.
-     * @param koko pelialueen ruudukon koko koko
-     * @param miinat ruukossa olevien miinojen määrä
-     */
-    public Peli(int koko, int miinat){        
+* Luo uuden pelialueen, johon liitetään ruudukko ja valikot.
+* @param koko pelialueen ruudukon koko koko
+* @param miinat ruukossa olevien miinojen määrä
+*/
+    public Peli(int koko, int miinat){
         lauta=new Pelilauta(this, koko, miinat);
         
         palkki = new JMenuBar();
@@ -87,10 +87,10 @@ public class Peli extends JFrame{
     }
     
     /**
-     * Luo uuden pelilaudan
-     * @param koko pelilaudan koko
-     * @param miinat pelilaudalla olevat miinat
-     */
+* Luo uuden pelilaudan
+* @param koko pelilaudan koko
+* @param miinat pelilaudalla olevat miinat
+*/
     private void uusiLauta(int koko, int miinat){
         this.remove(lauta);
         lauta=new Pelilauta(this, koko, miinat);
@@ -98,7 +98,10 @@ public class Peli extends JFrame{
         this.pack();
     }
     
-    public void keksiNimi(){
+    /**
+     * Kun pelaaj voittaa tai häviää pelin, kysyy pelaajalta aloitetaanko uusi peli.
+     */
+    public void loppuKysymys(){
         Object[] options = {"Kyllä", "Ei"};
         int n = JOptionPane.showOptionDialog(this, "Uusi peli?", "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
         if(n==0){
@@ -109,8 +112,8 @@ public class Peli extends JFrame{
         }
     }
     /**
-     * Kysyy käyttäjältä koon ja miinojen määrän ja luo uuden pelin niiden avulla.
-     */
+    * Kysyy käyttäjältä koon ja miinojen määrän ja luo uuden pelin niiden avulla.
+    */
     public void uusiPeli(){
         int koko=1;
         int miinat=0;
@@ -137,5 +140,5 @@ public class Peli extends JFrame{
             }
         }
         uusiLauta(koko, miinat);
-    }    
+    }
 }

@@ -55,5 +55,4 @@ public class RuutuTest {
         ruutu.avaaRuutu(0, 0);
         assertEquals(ruutu.voitto(), true);
     }
-    
 }

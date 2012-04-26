@@ -21,8 +21,10 @@ public class Pelilauta extends JPanel{
      * @param koko Kentän koko. Kenttä on neliö.
      * @param miinat Miinojen määrä.
      */
-    public Pelilauta(Peli peli, int koko, int miinat){
+    public Pelilauta(Peli peli, int koko, int miinat){        
         this.peli=peli;
+        
+        this.koko=koko;
         
         taulukko = new Nappula[koko][koko];
         
@@ -56,7 +58,7 @@ public class Pelilauta extends JPanel{
                         avaaTyhjatRuudut(y, x);
                     }
                     poistuminen(y, x);
-                }
+                 }
             }
         );
         nappula.addMouseListener(new MouseAdapter() {
@@ -64,7 +66,7 @@ public class Pelilauta extends JPanel{
             public void mouseClicked(MouseEvent e) {
                 Nappula apu=(Nappula)e.getSource();
                 if(e.getButton()==MouseEvent.BUTTON3){
-                    apu.merkitse();
+                    apu.muutaTila();
                 }
                 else if(e.getButton()==MouseEvent.BUTTON1 && !apu.isMerkitty()){
                     apu.setAvattu(true);
@@ -83,6 +85,10 @@ public class Pelilauta extends JPanel{
         if(miinaLkm==0){
             taulukko[y][x].setText("");
         }
+        else if(ruutu.getTila(y, x)==Ruutu.MIINA){
+            taulukko[y][x].setText("*");
+            taulukko[y][x].setBackground(Color.magenta);
+        }
         else{
             taulukko[y][x].setText(""+miinaLkm);
             taulukko[y][x].setBackground(varit[miinaLkm-1]);
@@ -100,20 +106,42 @@ public class Pelilauta extends JPanel{
         int maxY=Math.min(y+1, koko-1);
         int minX=Math.max(0,x-1);
         int maxX=Math.min(x+1, koko-1);
-        for(int a=minY; a<=maxY; a++){
-            for(int b=minX;b<=maxX;b++){
-                if(ruutu.getTila(a, b)!=Ruutu.MIINA){
-                    taulukko[a][b].setSelected(true);
-                    taulukko[a][b].setEnabled(false);
-                    if(ruutu.getTila(y, x)!=Ruutu.MIINA){
-                        muotoilut(a, b);
+            for(int a=minY; a<=maxY; a++){
+                for(int b=minX;b<=maxX;b++){
+                    if(ruutu.getTila(a, b)!=Ruutu.MIINA && ruutu.getNaapuriMiinat(y, x)==0){
+                        avaaRuutu(a, b);                        
                     }
-                    ruutu.avaaRuutu(a, b);
+                }
+            }
+    }
+    
+    /**
+     * Avaa ruudun (a, b) koordinaatteista.
+     * @param a x-koordinaatti
+     * @param b y-koordinaatti
+     */
+    private void avaaRuutu(int a, int b){
+            taulukko[a][b].setSelected(true);
+            taulukko[a][b].setEnabled(false);
+            if(ruutu.getTila(a, b)!=Ruutu.MIINA){
+                muotoilut(a, b);
+            }
+            ruutu.avaaRuutu(a, b);
+    }
+    
+    /**
+     * Jos pelaaja häviää pelin, näyttää kaikki ruudut, joissa oli miina.
+     */
+    private void naytaMiinat(){
+        for(int i=0; i<koko;i++){
+            for(int j=0; j<koko;j++){
+                if(ruutu.getTila(j, i)==Ruutu.MIINA){
+                    taulukko[j][i].setText("*");
+                    taulukko[j][i].setBackground(Color.red);
                 }
             }
         }
     }
-    
     /**
      * Tarkistaa, loppuuko peli, kun ruutua (y,x) painetaan.
      * @param y ruudun x-koordinaatti.
@@ -121,12 +149,13 @@ public class Pelilauta extends JPanel{
      */
     private void poistuminen(int y, int x){
         if(ruutu.getTila(y, x)==Ruutu.MIINA){
+            naytaMiinat();
             JOptionPane.showMessageDialog(null, "Hävisit pelin");
-            peli.keksiNimi();
+            peli.loppuKysymys();
         }
         else if(ruutu.voitto()){
             JOptionPane.showMessageDialog(null, "Voitit pelin!");
-            peli.keksiNimi();
+            peli.loppuKysymys();
         }
     }
 }
